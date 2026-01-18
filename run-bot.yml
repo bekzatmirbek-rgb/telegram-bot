@@ -1,0 +1,22 @@
+name: Run Telegram Bot
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Ар 5 мүнөт сайын иштет
+  workflow_dispatch:       # Кол менен да иштетсе болот
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: pip install pyTelegramBotAPI
+      - name: Run bot
+        run: python main.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
